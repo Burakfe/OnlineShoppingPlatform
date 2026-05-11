@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kefeshop Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="toast"></div>
+
+  <header class="navbar">
+    <div class="brand" onclick="goHome()">Kefeshop</div>
+    <nav>
+      <button onclick="showPage('home')">Products</button>
+      <button onclick="showPage('cart')">Cart <span id="cartCount">0</span></button>
+      <button onclick="showPage('orders')">My Orders</button>
+      <button onclick="tryAdmin()">Admin</button>
+      <button id="authButton" onclick="showPage('login')">Login</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- LOGIN -->
+    <section id="login" class="page">
+      <div class="auth-container">
+        <h1>Login</h1>
+        <p class="muted">Use demo accounts below.</p>
+
+        <div class="demo-box">
+          <b>Customer:</b> customer@demo.com / 1234<br />
+          <b>Admin:</b> admin@demo.com / admin123
+        </div>
+
+        <input id="email" placeholder="Email" />
+        <input id="password" type="password" placeholder="Password" />
+        <button class="primary" onclick="login()">Login</button>
+        <button onclick="register()">Register New Customer</button>
+      </div>
+    </section>
+
+    <!-- HOME / PRODUCTS -->
+    <section id="home" class="page active">
+      <div class="hero">
+        <h1>Kefeshop</h1>
+        <p>Browse products, manage cart, simulate checkout, track orders, and demonstrate admin management.</p>
+      </div>
+
+      <div class="controls">
+        <input id="searchInput" oninput="renderProducts()" placeholder="Search products..." />
+        <select id="categoryFilter" onchange="renderProducts()">
+          <option value="All">All Categories</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Home">Home</option>
+          <option value="Books">Books</option>
+        </select>
+      </div>
+
+      <h2>Product Catalog</h2>
+      <div id="productGrid" class="grid"></div>
+    </section>
+
+    <!-- PRODUCT DETAIL -->
+    <section id="productDetail" class="page">
+      <div id="detailContent"></div>
+    </section>
+
+    <!-- CART -->
+    <section id="cart" class="page">
+      <h1>Shopping Cart</h1>
+      <div id="cartContent"></div>
+    </section>
+
+    <!-- CHECKOUT -->
+    <section id="checkout" class="page">
+      <h1>Checkout & Payment Simulation</h1>
+      <div class="checkout-layout">
+        <div class="panel">
+          <h2>Shipping Information</h2>
+          <input id="shipName" placeholder="Full name" value="Demo Customer" />
+          <input id="shipAddress" placeholder="Address" value="TED University, Ankara" />
+
+          <h2>Payment Method</h2>
+          <select id="paymentMethod">
+            <option>Credit Card</option>
+            <option>PayPal</option>
+            <option>Cash on Delivery</option>
+          </select>
+          <input id="cardNumber" placeholder="Card number / demo input" value="4242 4242 4242 4242" />
+
+          <div class="button-row">
+            <button class="primary" onclick="simulatePayment(true)">Simulate Success</button>
+            <button class="danger" onclick="simulatePayment(false)">Simulate Failure</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Order Summary</h2>
+          <div id="checkoutSummary"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDER CONFIRMATION -->
+    <section id="confirmation" class="page">
+      <div class="success-card">
+        <h1>Order Created Successfully</h1>
+        <p>Your payment was simulated successfully. Inventory is updated and order tracking is now available.</p>
+        <button class="primary" onclick="showPage('orders')">Track Order</button>
+      </div>
+    </section>
+
+    <!-- ORDERS -->
+    <section id="orders" class="page">
+      <h1>Order Tracking</h1>
+      <div id="ordersContent"></div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="page">
+      <h1>Customer Reviews</h1>
+      <div id="reviewContent"></div>
+    </section>
+
+    <!-- ADMIN DASHBOARD -->
+    <section id="admin" class="page">
+      <div class="admin-layout">
+        <aside class="sidebar">
+          <h2>Admin Panel</h2>
+          <button onclick="renderAdmin('dashboard')">Dashboard</button>
+          <button onclick="renderAdmin('products')">Products</button>
+          <button onclick="renderAdmin('orders')">Orders</button>
+          <button onclick="renderAdmin('users')">Users</button>
+        </aside>
+        <div id="adminContent" class="admin-content"></div>
+      </div>
+    </section>
+
+    <!-- ACCESS DENIED -->
+    <section id="accessDenied" class="page">
+      <div class="error-card">
+        <h1>Access Denied</h1>
+        <p>Only administrators can access the admin dashboard.</p>
+        <button onclick="showPage('home')">Return Home</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
